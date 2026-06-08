@@ -50,6 +50,8 @@ OR
 make image-8gb 2>&1 | tee build.log
 ```
 
+To build a [PYNQ.remote](https://pynq.readthedocs.io/en/latest/pynq_remote.html) image instead, substitute `pynqremote-4gb` or `pynqremote-8gb` for the target above.
+
 Once the build has completed, if successful a SD card image will be available under the directory `<LOCAL_AUP-ZU3_REPO>/sdbuild/output/AUP-ZU3-3.1.img`.
 
 To write the AUP-ZU3-3.1.img to an SD card follow the steps on in [PYNQ SD card documentation](https://pynq.readthedocs.io/en/latest/appendix/sdcard.html)

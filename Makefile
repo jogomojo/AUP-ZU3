@@ -40,6 +40,17 @@ ${PREBUILT_SDIST}:
 	wget https://download.amd.com/opendownload/pynq/pynq-3.1.tar.gz -O $@
 	@echo "Got $@"
 
+pynqremote-4gb: AUP_ZU3_DDR4_CONFIG := 4
+pynqremote-4gb: pynqremote
+
+pynqremote-8gb: AUP_ZU3_DDR4_CONFIG := 8
+pynqremote-8gb: pynqremote
+
+pynqremote: gitsubmodule ${PREBUILT_SDIST} ${PREBUILT_IMAGE} base
+	echo "Building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB PYNQ.remote Image"
+	export AUP_ZU3_DDR4_CONFIG=${AUP_ZU3_DDR4_CONFIG}; cd ${ROOT_PATH}/pynq/sdbuild/ && make pynqremote BOARDDIR=${ROOT_PATH} BOARDS=${REPO_NAME} PYNQ_SDIST=${PREBUILT_SDIST} PYNQ_ROOTFS=${PREBUILT_IMAGE}
+	echo "Finished building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB PYNQ.remote Image"
+
 cleanbuild:
 	sudo make -C pynq/sdbuild/ clean
 	cd ${ROOT_PATH}/base && make clean

@@ -4,11 +4,11 @@
 
 **Required tools:**
 
-* Ubuntu 22.04 LTS 64-bit host PC
+* Ubuntu 24.04 LTS 64-bit host PC
 * Passwordless SUDO privilege for the building user
-* Roughly 35GB of free space (build process only, not accounting for Xilinx tools)
+* Roughly 35GB of free space (build process only, not accounting for AMD tools)
 * At least 8GB of RAM (more is better)
-* AMD PetaLinux 2024.1 and Vivado 2024.1
+* AMD Vivado and Vitis 2025.2. Boot artefacts are built with EDF, not PetaLinux.
 
 Retrieve the AUP-ZU3 board git into a NEW directory.
 
@@ -32,13 +32,7 @@ cd pynq/sdbuild
 make checkenv
 ```
 
-The AUP-ZU3 comes in two configurations: 4GB and 8GB DDR4
-
-Each board is marked as 4G (4GB) and 8G (8GB)
-
-Run the corresponding makefile with `image-4gb` or `image-8gb` accordingly.
-
-In the root directory (`<LOCAL_AUP-ZU3_REPO>/`) run `make`.
+The AUP-ZU3 comes in two configurations: 4GB and 8GB DDR4. Each board is marked 4G or 8G. The default is 4GB.
 
 ```shell
 make image-4gb 2>&1 | tee build.log
@@ -50,9 +44,11 @@ OR
 make image-8gb 2>&1 | tee build.log
 ```
 
-Once the build has completed, if successful a SD card image will be available under the directory `<LOCAL_AUP-ZU3_REPO>/sdbuild/output/AUP-ZU3-3.1.img`.
+`make` builds the 4GB classic image. To build a [PYNQ.remote](https://pynq.readthedocs.io/en/latest/pynq_remote.html) image, use `pynqremote-4gb` or `pynqremote-8gb`.
 
-To write the AUP-ZU3-3.1.img to an SD card follow the steps on in [PYNQ SD card documentation](https://pynq.readthedocs.io/en/latest/appendix/sdcard.html)
+Once the build has completed, the image is `<LOCAL_AUP-ZU3_REPO>/pynq/sdbuild/output/AUP-ZU3-4.0.0.img` for a classic image, or `AUP-ZU3-4.0.0-remote.img` for a remote image.
+
+To write the image to an SD card follow the steps in [PYNQ SD card documentation](https://pynq.readthedocs.io/en/latest/appendix/sdcard.html)
 
 Use [balenaEtcher](https://etcher.balena.io), [Win32DiskImager](https://win32diskimager.org), or directly through the Operating System to write this image to an SD card.
 

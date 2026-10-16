@@ -8,6 +8,8 @@ import warnings
 from math import isclose
 from pynq.lib.video.clocks import *
 from pynq.lib import AxiGPIO
+
+import aup_iop
 #from .constants import *
 
 class rgbleds_class(AxiGPIO): 
@@ -41,14 +43,8 @@ class BaseOverlay(pynq.Overlay):
 
             self.iop_grove0.mbtype = "GC"
             self.GC = self.iop_grove0.mb_info
-
-            grove_dir = '/pynq/lib/pynqmicroblaze/grove_modules'
-            if os.path.exists(grove_dir):
-                pynq.lib.pynqmicroblaze.bsp.add_module_path(grove_dir)
-
-            bsp_dir = '/pynq/lib/gc/bsp_iop_grove0'
-            if os.path.exists(bsp_dir):
-                pynq.lib.pynqmicroblaze.bsp.add_bsp(bsp_dir)
+            self.Rpi = aup_iop.Rpi
+            self.Grove = aup_iop.GC
 
 
     def download(self):

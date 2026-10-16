@@ -14,8 +14,14 @@ foreach item $ip version $ip_version {
    if {[catch { glob -directory ${pynq_hls_ip}/${item}/${item}_zu3_solution/impl/ip/ *.zip} zip_file]} {
 # Build IP only if a packaged IP does not exist
       puts "Building $item IP"
-      puts "vitis_hls -f ./build_hls_ip.tcl -tclargs ${item} ${version}"
-      exec vitis_hls -f ./build_hls_ip.tcl -tclargs ${item} ${version}
+      set runner [file join /tmp run_hls_${item}_[pid].tcl]
+      set fd [open $runner w]
+      puts $fd "set ip_name {$item}"
+      puts $fd "set version {$version}"
+      puts $fd "source [file normalize ./build_hls_ip.tcl]"
+      close $fd
+      puts "vitis-run --mode hls --tcl $runner"
+      exec vitis-run --mode hls --tcl $runner
    } else {
 # Skip IP when a packaged IP exists in ip directory
       puts "Skipping building $item"

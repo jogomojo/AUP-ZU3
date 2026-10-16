@@ -4,7 +4,7 @@
 overlay_name := base
 design_name := base
 
-AUP_ZU3_DDR4_CONFIG := 4
+AUP_ZU3_DDR4_CONFIG ?= 4
 
 all:  block_design bitstream dts check_timing
 	@echo

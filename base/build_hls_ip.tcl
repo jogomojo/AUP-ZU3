@@ -1,15 +1,9 @@
 # Copyright (C) 2025 Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: BSD-3-Clause
 
-if { $argc != 4 } {
-    puts "The script requires the name of the IP to be passed as a tcl argument."
-    puts "For example, hls_build_script.tcl -tcl_args ip_name"
-    puts [llength $argv]
-    puts "Arguments:"
-    foreach i $argv {puts $i}
-} else {
-    set ip_name [lindex $argv 2]
-    set version [lindex $argv 3]
+if {![info exists ip_name] || ![info exists version]} {
+    puts "ERROR: set ip_name and version before sourcing this script."
+    exit 1
 }
 cd ./../pynq/boards/ip/hls/
 open_project ${ip_name}

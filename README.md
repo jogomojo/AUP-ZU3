@@ -46,7 +46,7 @@ make image-8gb 2>&1 | tee build.log
 
 `make` builds the 4GB classic image. To build a [PYNQ.remote](https://pynq.readthedocs.io/en/latest/pynq_remote.html) image, use `pynqremote-4gb` or `pynqremote-8gb`.
 
-Once the build has completed, the image is `<LOCAL_AUP-ZU3_REPO>/pynq/sdbuild/output/AUP-ZU3-4.0.0.img` for a classic image, or `AUP-ZU3-4.0.0-remote.img` for a remote image.
+Once the build has completed, the image is `<LOCAL_AUP-ZU3_REPO>/AUP-ZU3-4.0.0.img` for a classic image, or `AUP-ZU3-4.0.0-remote.img` for a remote image.
 
 To write the image to an SD card follow the steps in [PYNQ SD card documentation](https://pynq.readthedocs.io/en/latest/appendix/sdcard.html)
 

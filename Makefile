@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 ROOT_PATH := $(abspath $(dir $(firstword $(MAKEFILE_LIST))))
-REPO_NAME := $(notdir $(ROOT_PATH))
+BOARD ?= AUP-ZU3
+VERSION := 4.0.0
 
 PREBUILT_IMAGE := ${ROOT_PATH}/pynq/sdbuild/prebuilt/pynq_rootfs.aarch64.tar.gz
 PREBUILT_SDIST := ${ROOT_PATH}/pynq/sdbuild/prebuilt/pynq_sdist.tar.gz
@@ -19,7 +20,8 @@ image-8gb: image
 
 image: gitsubmodule ${PREBUILT_SDIST} ${PREBUILT_IMAGE} base bsp
 	echo "Building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB Image"
-	export AUP_ZU3_DDR4_CONFIG=${AUP_ZU3_DDR4_CONFIG}; cd ${ROOT_PATH}/pynq/sdbuild/ && make BOARDDIR=${ROOT_PATH} BOARDS=${REPO_NAME} PYNQ_SDIST=${PREBUILT_SDIST} PYNQ_ROOTFS=${PREBUILT_IMAGE}
+	export AUP_ZU3_DDR4_CONFIG=${AUP_ZU3_DDR4_CONFIG}; cd ${ROOT_PATH}/pynq/sdbuild/ && make BOARDDIR=${ROOT_PATH} BOARDS=${BOARD} PYNQ_SDIST=${PREBUILT_SDIST} PYNQ_ROOTFS=${PREBUILT_IMAGE}
+	mv ${ROOT_PATH}/pynq/sdbuild/output/${BOARD}-${VERSION}.img ${ROOT_PATH}/
 	echo "Finished building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB Image"
 
 base: ${ROOT_PATH}/base/base.bit
@@ -54,7 +56,8 @@ pynqremote-8gb: pynqremote
 
 pynqremote: gitsubmodule ${PREBUILT_SDIST} ${PREBUILT_IMAGE} base bsp
 	echo "Building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB PYNQ.remote Image"
-	export AUP_ZU3_DDR4_CONFIG=${AUP_ZU3_DDR4_CONFIG}; cd ${ROOT_PATH}/pynq/sdbuild/ && make pynqremote BOARDDIR=${ROOT_PATH} BOARDS=${REPO_NAME} PYNQ_SDIST=${PREBUILT_SDIST} PYNQ_ROOTFS=${PREBUILT_IMAGE}
+	export AUP_ZU3_DDR4_CONFIG=${AUP_ZU3_DDR4_CONFIG}; cd ${ROOT_PATH}/pynq/sdbuild/ && make pynqremote BOARDDIR=${ROOT_PATH} BOARDS=${BOARD} PYNQ_SDIST=${PREBUILT_SDIST} PYNQ_ROOTFS=${PREBUILT_IMAGE}
+	mv ${ROOT_PATH}/pynq/sdbuild/output/${BOARD}-${VERSION}-remote.img ${ROOT_PATH}/
 	echo "Finished building AUP-ZU3 ${AUP_ZU3_DDR4_CONFIG}GB PYNQ.remote Image"
 
 cleanbuild:
